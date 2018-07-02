@@ -22,7 +22,7 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
     var Target: SCNNode?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
+//        self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
         self.sceneView.session.run(configuration)
         self.sceneView.autoenablesDefaultLighting = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
