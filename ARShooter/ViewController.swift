@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
+    var power: Float = 50
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
@@ -38,8 +39,9 @@ class ViewController: UIViewController {
         bullet.geometry?.firstMaterial?.diffuse.contents = UIColor.red
         bullet.position = position
         let body = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(node: bullet, options: nil))
+        body.isAffectedByGravity = false
         bullet.physicsBody = body
-        bullet.physicsBody?.applyForce(SCNVector3(orientation.x, orientation.y, orientation.z), asImpulse: true)
+        bullet.physicsBody?.applyForce(SCNVector3(orientation.x*power, orientation.y*power, orientation.z*power), asImpulse: true)
         self.sceneView.scene.rootNode.addChildNode(bullet)
     }
 
