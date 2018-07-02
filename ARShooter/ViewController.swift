@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         let eggScene = SCNScene(named: "Media.scnassets/egg.scn")
         let eggNode = (eggScene?.rootNode.childNode(withName: "egg", recursively: false))!
         eggNode.position = SCNVector3(x,y,z)
-        eggNode.physicsBody = SCNPhysicsBody.static()
+        eggNode.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: eggNode, options: nil))
         self.sceneView.scene.rootNode.addChildNode(eggNode)
     }
     
