@@ -8,6 +8,12 @@
 
 import UIKit
 import ARKit
+
+enum BitMaskCategory: Int {
+    case bullet = 2
+    case target = 3
+}
+
 class ViewController: UIViewController, SCNPhysicsContactDelegate {
 
     @IBOutlet weak var sceneView: ARSCNView!
@@ -43,6 +49,8 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         body.isAffectedByGravity = false
         bullet.physicsBody = body
         bullet.physicsBody?.applyForce(SCNVector3(orientation.x*power, orientation.y*power, orientation.z*power), asImpulse: true)
+        bullet.physicsBody?.categoryBitMask = BitMaskCategory.bullet.rawValue
+        bullet.physicsBody?.contactTestBitMask = BitMaskCategory.target.rawValue
         self.sceneView.scene.rootNode.addChildNode(bullet)
     }
 
@@ -58,6 +66,8 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         let eggNode = (eggScene?.rootNode.childNode(withName: "egg", recursively: false))!
         eggNode.position = SCNVector3(x,y,z)
         eggNode.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: eggNode, options: nil))
+        eggNode.physicsBody?.categoryBitMask = BitMaskCategory.target.rawValue
+        eggNode.physicsBody?.contactTestBitMask = BitMaskCategory.bullet.rawValue
         self.sceneView.scene.rootNode.addChildNode(eggNode)
     }
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
