@@ -8,7 +8,7 @@
 
 import UIKit
 import ARKit
-class ViewController: UIViewController {
+class ViewController: UIViewController, SCNPhysicsContactDelegate {
 
     @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         self.sceneView.autoenablesDefaultLighting = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.sceneView.addGestureRecognizer(tapGestureRecognizer)
+        self.sceneView.scene.physicsWorld.contactDelegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -59,7 +60,9 @@ class ViewController: UIViewController {
         eggNode.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(node: eggNode, options: nil))
         self.sceneView.scene.rootNode.addChildNode(eggNode)
     }
-    
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        print("came into contact")
+    }
 }
 
 func +(left: SCNVector3, right: SCNVector3) -> SCNVector3 {
