@@ -87,6 +87,7 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         confettiNode.addParticleSystem(confetti!)
         confettiNode.position = contact.contactPoint
         self.sceneView.scene.rootNode.addChildNode(confettiNode)
+        Target?.removeFromParentNode()
         
     }
 }
