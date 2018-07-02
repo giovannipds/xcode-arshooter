@@ -19,6 +19,7 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
     @IBOutlet weak var sceneView: ARSCNView!
     let configuration = ARWorldTrackingConfiguration()
     var power: Float = 50
+    var Target: SCNNode?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin, ARSCNDebugOptions.showFeaturePoints]
@@ -71,7 +72,22 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         self.sceneView.scene.rootNode.addChildNode(eggNode)
     }
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        print("came into contact")
+        let nodeA = contact.nodeA
+        let nodeB = contact.nodeB
+        if nodeA.physicsBody?.categoryBitMask == BitMaskCategory.target.rawValue {
+            self.Target = nodeA
+        } else if nodeB.physicsBody?.categoryBitMask == BitMaskCategory.bullet.rawValue {
+            self.Target = nodeB
+        }
+        let confetti = SCNParticleSystem(named: "Media.scnassets/Confetti.scnp", inDirectory: nil)
+        confetti?.loops = false
+        confetti?.particleLifeSpan = 4
+        confetti?.emitterShape = Target?.geometry
+        let confettiNode = SCNNode()
+        confettiNode.addParticleSystem(confetti!)
+        confettiNode.position = contact.contactPoint
+        self.sceneView.scene.rootNode.addChildNode(confettiNode)
+        
     }
 }
 
