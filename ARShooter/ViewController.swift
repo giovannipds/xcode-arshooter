@@ -83,7 +83,7 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         } else if nodeB.physicsBody?.categoryBitMask == BitMaskCategory.bullet.rawValue {
             self.Target = nodeB
         }
-        let confetti = SCNParticleSystem(named: "Media.scnassets/Reactor.scnp", inDirectory: nil)
+        let confetti = SCNParticleSystem(named: "Media.scnassets/Smoke.scnp", inDirectory: nil)
         confetti?.loops = false
         confetti?.particleLifeSpan = 4
         confetti?.emitterShape = Target?.geometry
