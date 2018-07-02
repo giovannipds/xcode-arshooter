@@ -53,6 +53,10 @@ class ViewController: UIViewController, SCNPhysicsContactDelegate {
         bullet.physicsBody?.categoryBitMask = BitMaskCategory.bullet.rawValue
         bullet.physicsBody?.contactTestBitMask = BitMaskCategory.target.rawValue
         self.sceneView.scene.rootNode.addChildNode(bullet)
+        bullet.runAction(
+            SCNAction.sequence([SCNAction.wait(duration: 2.0),
+                                SCNAction.removeFromParentNode()])
+        )
     }
 
     @IBAction func addTargets(_ sender: Any) {
